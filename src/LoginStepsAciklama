@@ -1,0 +1,31 @@
+public class _01_LoginSteps {
+
+    DialogContent dc = new DialogContent();
+
+    @Given("Navigate to Campus")
+    public void navigateToCampus() {
+        _gwd.getDriver().get("https://demo.mersys.io/");
+        _gwd.getDriver().manage().window().maximize();
+//        https://test.mersys.io/
+    }
+
+    @When("Enter username and password and click Login button")
+    public void enterUsernameAndPasswordAndClickLoginButton() { // bu isim değişmemeli
+
+//        WebDriverWait wait = new WebDriverWait(_gwd.getDriver(), Duration.ofSeconds(30));
+//        wait.until(ExpectedConditions.visibilityOf(dc.username));
+
+        // her seferinde textbox'ın görünmesini beklemek için bunları yazmak yerine
+        //bir fonksiyon yazalım,o fonksiyona hangi elemente hangi text'in gideceğini verelim
+
+        dc.findAndSend("username","richfield.edu");
+        dc.findAndSend("password","Richfield2020!");
+        dc.findAndClick("loginButton");
+    }
+//
+//
+//    username:turkeyts
+//    password:TechnoStudy123
+
+    @Then("User should login succesfully")
+    public void userShouldLoginSuccesfully() {System.out.println("merhaba cucumber");}

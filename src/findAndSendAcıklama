@@ -1,0 +1,37 @@
+WebElement myElement;
+    public void findAndSend(String strElement,String value)
+    {
+
+        // element görünene kadar bekle
+        // elemente kadar scroll yap
+        // clear
+        // sendkeys
+        // bunları yapacağız
+        // ve bunları bir çok classta yapacağımız için bu işlemi bir
+        // parent classta yaparsak daha kolay olur
+
+//        element get
+//        if (strElement=="username")
+//            myElement=username;
+//        if (strElement=="password")
+//            myElement=password;
+
+//        bu yapıyı kullanmak yerine switch ile yapacağız
+
+        switch (strElement)
+        {
+            case "username" : myElement = username;break;
+            case "password" : myElement = password;break;
+        }
+        // eğer loginsteps'deki when aşamasında yazılan
+        // dc.finandsend()'den gönderilen strElement parametresi username ise
+        // username'i myElement'e ata.
+
+        sendKeysFunction(myElement,value);
+
+        loginsteps ten gelen strElement ve value parametrelerindenden username'i myelement'e atar.
+        username atanmış olan myElement ve loginsteps'den gelen value parametresini sendkeysFunction'a
+         parametre olarak gönderir.
+
+
+    }
