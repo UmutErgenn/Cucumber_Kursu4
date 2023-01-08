@@ -2,6 +2,7 @@ package Pages;
 
 import Utilities._gwd;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -23,7 +24,15 @@ public class Parent {
     {
         waitUntillClickable(element);
         scrollToElement(element);
-        element.click();
+//        element.click();
+        try {
+            element.click();
+        }catch (org.openqa.selenium.StaleElementReferenceException ex)
+        {
+            element.click();
+        }
+//        wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("fuse-progress-bar > *"),0));
+//      stale element hatasını gidermek için kullanılabilir.    progress barın çocukları 0 olana kadar bekle.
     }
 
     public void verifyContainsTextFunction(WebElement element,String value)

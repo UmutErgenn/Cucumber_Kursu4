@@ -55,7 +55,7 @@ public class DialogContent extends Parent{  // inheritence
     @FindBy(xpath = "//dynamic-view[@class='ng-star-inserted']")
     private WebElement alreadyExist;
 
-    @FindBy(xpath = "//ms-text-field//input[1]")        //  //div[@class='mat-form-field-wrapper ng-tns-c77-190']//input
+    @FindBy(xpath = "//mat-form-field//input[@data-placeholder='Name']")   // //ms-text-field//input[1]
     private WebElement searchInput;
 
     @FindBy(xpath = "//ms-search-button//button")

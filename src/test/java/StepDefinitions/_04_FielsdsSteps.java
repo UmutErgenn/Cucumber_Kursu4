@@ -18,11 +18,12 @@ public class _04_FielsdsSteps extends DialogContent {
         lf.findAndClick("setupOne");
         lf.findAndClick("parameters");
         lf.findAndClick("fields");
-        dc.findAndContainsText("searchResultCellText","Text");
+//        dc.findAndContainsText("searchResultCellText","Text");
     }
 
     @When("User a Fields name as {string} code as {string}")
     public void userAFieldsNameAsCodeAs(String name, String code) {
+        dc.findAndContainsText("searchResultCellText","Text");
         dc.findAndClick("addButton");
         dc.findAndSend("nameInput",name);
         dc.findAndSend("codeInput",code);

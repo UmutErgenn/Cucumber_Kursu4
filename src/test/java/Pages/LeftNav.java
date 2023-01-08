@@ -23,6 +23,15 @@ public class LeftNav extends Parent{    // sayfanın solundaki table gibi olan y
     @FindBy(xpath = "(//span[text()='Fields'])[1]")
     private WebElement fields;
 
+    @FindBy(xpath = "(//span[text()='Entrance Exams'])[1]")
+    private WebElement entranceExamsOne;
+
+    @FindBy(xpath = "(//span[text()='Setup'])[2]")
+    private WebElement setupTwo;
+
+    @FindBy(xpath = "(//span[text()='Entrance Exams'])[2]")
+    private WebElement entranceExamsTwo;
+
     WebElement myElement;
 
     public void findAndClick(String strElement)
@@ -33,6 +42,9 @@ public class LeftNav extends Parent{    // sayfanın solundaki table gibi olan y
             case "parameters" : myElement=parameters;break;
             case "fees" : myElement=fees;break;
             case "fields" : myElement=fields;break;
+            case "entranceExamsOne" : myElement=entranceExamsOne;break;
+            case "setupTwo" : myElement=setupTwo;break;
+            case "entranceExamsTwo" : myElement=entranceExamsTwo;break;
         }
         clickFunction(myElement);
     }
