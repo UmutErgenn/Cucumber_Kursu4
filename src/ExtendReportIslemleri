@@ -1,0 +1,129 @@
+ExtendReportIslemleri
+https://www.programsbuzz.com/article/cucumber-testng-generate-extent-report-using-extent-adapter-grasshopper
+
+1-POM Dependency Eklentisi eklenir
+
+<dependency>
+    <groupId>tech.grasshopper</groupId>
+    <artifactId>extentreports-cucumber7-adapter</artifactId>
+    <version>1.2.0</version>
+</dependency>
+
+2- gwd'ye şu eklendi:
+// extend report türkçe bilg çalışmaması sebebiyle kondu
+           Locale.setDefault(new Locale("EN"));
+           System.setProperty("user.language", "EN");
+
+3- RunnerClass'a plugin eklendi
+
+plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
+
+4- extent.properties dosyası resources içinde  oluşturuldu ve içi şunlarla dolduruldu:
+
+extent.reporter.spark.start=true
+extent.reporter.spark.out=test-output/SparkReport/Spark.html
+
+5- Rapora screeenshot eklenmesi için:
+https://www.programsbuzz.com/article/how-add-screenshot-cucumber-extent-report-every-step
+
+a) Hooks'a aşağıdaki bölüm eklendi
+if (senaryo.isFailed())
+        {
+            final byte[] screenshot = ((TakesScreenshot) _gwd.getDriver()).getScreenshotAs(OutputType.BYTES);
+            senaryo.attach(screenshot, "image/png", "screenshot name");
+
+        }
+b) extends.properties'e aşağıdaki bçlüm eklendi:
+
+#screenshot folder and src settings
+screenshot.dir=test-output/screenshots/
+screenshot.rel.path=../screenshots/
+
+6- extend reports config file eklenmesi (tema-title-report name)
+https://www.programsbuzz.com/article/cucumber-extent-report-config-file
+
+a) extends.properties'e aşağıdaki satır eklenir:
+extent.reporter.spark.config=src/test/resources/extent-config.xml
+
+b) extent-config.xml dosyası yukarıdaki path'e aşağıdaki şekilde eklenir:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<extentreports>
+    <configuration>
+
+        <!-- report theme -->
+        <!-- STANDARD, DARK -->
+        <theme>DARK</theme>
+
+        <!-- document encoding -->
+        <!-- defaults to UTF-8 -->
+        <encoding>UTF-8</encoding>
+
+        <!-- protocol for script and stylesheets -->
+        <!-- defaults to https -->
+        <!-- HTTP, HTTPS -->
+        <protocol>HTTPS</protocol>
+
+        <!-- offline report -->
+        <timelineEnabled>true</timelineEnabled>
+
+        <!-- offline report -->
+        <enableOfflineMode>false</enableOfflineMode>
+
+        <!-- use thumbnails for base64 images -->
+        <!-- this may slowdown viewing tests -->
+        <thumbnailForBase64>false</thumbnailForBase64>
+
+        <!-- title of the document -->
+        <documentTitle>Campus Report</documentTitle>
+
+        <!-- report name - displayed at top-nav -->
+        <reportName>Campus Regression- Cucumber Report</reportName>
+
+        <!-- timestamp format -->
+        <timeStampFormat>MMM dd, yyyy HH:mm:ss</timeStampFormat>
+
+        <!-- custom javascript -->
+        <scripts>
+            <![CDATA[
+        $(document).ready(function() {
+
+        });
+      ]]>
+        </scripts>
+
+        <!-- custom styles -->
+        <styles>
+            <![CDATA[
+
+      ]]>
+        </styles>
+
+    </configuration>
+</extentreports>
+
+7- Extra sistem info bilgileri ve açıklamalar istenirse aşağıdaki şekilde eklenebilir:
+
+Sistem bilgileri en son ekleneceğinden rapor için çalıştırılan runner class'tan sonra yanitest tamamen bitince yani runnerclass'tan sonra olması gerektiği için
+TestNG'nin AfterClass Annotation'ına aşağıdaki gibi eklenir:
+
+public class _07_TestRunnerExtentReport extends AbstractTestNGCucumberTests {
+
+    @AfterClass // rapor bittiği zaman çalışır
+    public static void writeExtentReport() {
+        ExtentService.getInstance().setSystemInfo("Windows User Name", System.getProperty("user.name"));
+        ExtentService.getInstance().setSystemInfo("Time Zone", System.getProperty("user.timezone"));
+        ExtentService.getInstance().setSystemInfo("User Name", "Umut Ergen");
+        ExtentService.getInstance().setSystemInfo("Application Name", "Campus");
+        ExtentService.getInstance().setSystemInfo("Operating System Info", System.getProperty("os.name"));
+        ExtentService.getInstance().setSystemInfo("Department", "QA");
+        ExtentService.getInstance().setSystemInfo("Ek Satır", "Açıklama");
+    }
+
+}
+
+8- Report'un PDF çıktısı için extend.properties'e aşağıdaki bölüm eklendi:
+
+#PDF Report
+       extent.reporter.pdf.start=true
+       extent.reporter.pdf.out=PdfReport.pdf

@@ -18,21 +18,21 @@ public class _01_LoginSteps {
 
     @Given("Navigate to Campus")
     public void navigateToCampus() {
-        _gwd.getDriver().get("https://demo.mersys.io/");
+        _gwd.getDriver().get("https://test.mersys.io/");        //https://demo.mersys.io/
         _gwd.getDriver().manage().window().maximize();
     }
 
     @When("Enter username and password and click Login button")
     public void enterUsernameAndPasswordAndClickLoginButton() {         // bu isim değişmemeli
 
-        dc.findAndSend("username","richfield.edu");
-        dc.findAndSend("password","Richfield2020!");
+        dc.findAndSend("username","turkeyts");
+        dc.findAndSend("password","TechnoStudy123");
         dc.findAndClick("loginButton");
     }
 
     @Then("User should login succesfully")
     public void userShouldLoginSuccesfully() {
-        dc.findAndContainsText("txtDashboard","2022-2023 - America/New_York");
+        dc.findAndContainsText("txtDashboard","2022-2023 Academic Period - Europe/London");
         // TODO : accept cookies kapatılacak
         dc.findAndClick("acceptCookies");
 

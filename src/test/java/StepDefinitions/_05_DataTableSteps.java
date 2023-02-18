@@ -3,15 +3,15 @@ package StepDefinitions;
 import Pages.DialogContent;
 import Pages.FormContent;
 import Pages.LeftNav;
+import Pages.Parent;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 
 import java.util.List;
 
-public class _05_DataTableSteps {
+public class _05_DataTableSteps extends Parent {
     LeftNav ln = new LeftNav();
     DialogContent dc = new DialogContent();
-
     FormContent fc = new FormContent();
     @And("Click on the element in left nav")
     public void clickOnTheElementInLeftNav(DataTable elemanlar)
@@ -31,7 +31,7 @@ public class _05_DataTableSteps {
 
         for (String strButtonName : listElemanlar)
         {
-//            dc.findAndContainsText("searchResultCellText","Text");
+            waitUntilLoading();
             dc.findAndClick(strButtonName);
         }
     }

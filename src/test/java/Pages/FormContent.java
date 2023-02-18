@@ -13,11 +13,20 @@ public class FormContent extends Parent {
     @FindBy(xpath = "(//mat-option[@role='option']/span)[1]")
     private WebElement academicPeriod1;
 
-    @FindBy(xpath = "//mat-select[@formcontrolname='id']/div/div[1]")
+    @FindBy(xpath = "//mat-select[@formcontrolname='id']//span")
     private WebElement gradeLevel;
 
-    @FindBy(xpath = "(//mat-option[@role='option']/span)[1]")
+    @FindBy(xpath = "(//mat-option[@role='option'])[4]/span")
     private WebElement gradeLevel2;
+
+    @FindBy(xpath = "(//mat-option[@role='option']/span[.=' Sahale '])")
+    private WebElement gradeLevel3;
+
+    @FindBy(xpath = "(//mat-option[@role='option']/span[.=' bbccbbb '])")
+    private WebElement gradeLevel4;
+
+    @FindBy(xpath = "(//mat-option[@role='option']/span[.=' 2.Sinif '])")
+    private WebElement gradeLevel5;
 
     WebElement myElement;
 

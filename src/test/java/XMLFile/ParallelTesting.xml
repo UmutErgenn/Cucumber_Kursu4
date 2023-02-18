@@ -1,0 +1,27 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suit" parallel="tests" thread-count="2">     <!--Tüm testleri kapsayan bölüm-->
+
+    <!--Test1'i kapsayan bölüm-->
+    <test name="test1">
+
+        <parameter name="browser" value="firefox"></parameter>
+
+        <!--çalışacak classların yazıldığı bölüm-->
+        <classes>
+            <class name="Runners._09_TestRunnerParallel"></class>
+        </classes>
+
+    </test>
+
+    <test name="test2">
+
+        <parameter name="browser" value="chrome"></parameter>
+
+        <!--çalışacak classların yazıldığı bölüm-->
+        <classes>
+            <class name="Runners._09_TestRunnerParallel"></class>
+        </classes>
+
+    </test>
+
+</suite>

@@ -45,8 +45,8 @@ public class DialogContent extends Parent{  // inheritence
 
     @FindBy(xpath = "//ms-save-button//button")
     private  WebElement saveButton;
-
-    @FindBy(xpath = "//div[contains(text(),'successfully')] ")     ////dynamic-view[@class='ng-star-inserted']      bu da bulur
+////dynamic-view[@class='ng-star-inserted']
+    @FindBy(xpath = "//div[@style='position: relative; height: 100%;']//dynamic-view[@class='ng-star-inserted']")     //      //div[contains(text(),'successfully')]
     private WebElement successMessage;
 
     @FindBy(css = "a[class='ccb__edit']+button")
@@ -128,7 +128,8 @@ public class DialogContent extends Parent{  // inheritence
         findAndClick("searchButton");       // arama butonuna bas
 
 //        wait.until(ExpectedConditions.stalenessOf(deleteButton));     stale zamanını yakalayamadım, işe yaramadı.
-        findAndContainsText("searchResultCell",searchText); // arama sonuçlarının ilkinde aranan kelime gözükene kadar bekle.stale element hatası almamak için.
+//        findAndContainsText("searchResultCell",searchText); // arama sonuçlarının ilkinde aranan kelime gözükene kadar bekle.stale element hatası almamak için.
+        waitUntilLoading();
 
         findAndClick("deleteButton");       // silme butonuna bas,çöp kutusu
         findAndClick("deleteDialogBtn");        //dialogtaki silme butonuna bas

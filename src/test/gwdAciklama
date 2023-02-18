@@ -1,27 +1,21 @@
-package Utilities;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeDriverService;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.safari.SafariDriverService;
-
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class _gwd { // genel web driver
 
+// ! Paralel static local anlatmadna önce mikroişlemci gelişimini anlatalık, thread e gelelimki
+//     aşağıdaki değişkenler için, thread.Sşeep den bahsedilebilir, pipeline, local ama static eğişken olmalı
+//     pipeline-thread-tread.sleep selenium dedği explicit kullanın biz böyle yaptık.burada thread bazlı static değişken
+//     yaplaıyızı o lokale özel
+//
+//     biz burada tüm sistemi static driver üzerine kurduk, bu durumda bize local static lazım thread özel
+
+//      hem static hem de thread'e çzel değişken : static WebDriver1, static WebDriver2
     private static ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();   // her thread'e özel local static driver oluşacak.  WebDriver1,WebDriver2
     private static ThreadLocal<String> threadBrowserName = new ThreadLocal<>();     // Chrome, firefox
 
     // threadDriver.get() -> bulunduğum thread'deki driver'ı verir.
     // threadDriver.set(driver) -> bulunduğum thread'e driver set ediliyor.
 
+
+//    private static WebDriver driver;          artık buna ihtiyacım kalmadı.
 
     public  static WebDriver getDriver()
     {
@@ -30,8 +24,12 @@ public class _gwd { // genel web driver
 
         Logger.getLogger("").setLevel(Level.SEVERE);    // sadece error'larıı göster
         System.setProperty(org.slf4j.simple.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "Error");
+//        System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY,"true");      sıkıntı olursa chrome'a ekle.
+//        System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE,"/dev/null");
+//        System.setProperty(EdgeDriverService.EDGE_DRIVER_SILENT_OUTPUT_PROPERTY,"true");
 
-        if (threadDriver.get()==null) {
+        if (threadDriver.get()==null) { // şu andaki yani bu thread'deki driver'ım boş mu?
+            // driver'ı start et, doldur, başlat ve gönder
 
             switch (threadBrowserName.get())
             {
@@ -47,10 +45,15 @@ public class _gwd { // genel web driver
                     WebDriverManager.edgedriver().setup();
                     threadDriver.set(new EdgeDriver());
 
-                default:
+                default:                                                            //  diğer testlerimizi  direk çalıştırıken XML'den parametre gelmeyeceği için default olarak chrome atandı
                     WebDriverManager.chromedriver().setup();
                     threadDriver.set(new ChromeDriver());
             }
+
+//            WebDriverManager.chromedriver().setup();
+            //            driver = new ChromeDriver();
+
+//            threadDriver.set(new ChromeDriver());   // bu thread'e bir webDriver atanıyor.
         }
         return threadDriver.get(); // driver'ı gönder
     }
@@ -63,6 +66,9 @@ public class _gwd { // genel web driver
         }
         if (threadDriver.get() != null) // dolu ise
         {
+//            driver.quit();
+//            driver=null;
+
             threadDriver.get().quit();
             WebDriver driver = threadDriver.get();
             driver=null;
@@ -70,8 +76,8 @@ public class _gwd { // genel web driver
         }
 
     }
-    public static void setThreadBrowserName(String browserName) {   // setter metod.encapsulation.
-        _gwd.threadBrowserName.set(browserName);
+    public static void setThreadBrowserName(ThreadLocal<String> threadBrowserName) {
+        _gwd.threadBrowserName = threadBrowserName;
     }
 
 }

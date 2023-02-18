@@ -32,6 +32,4 @@ WebElement myElement;
         loginsteps ten gelen strElement ve value parametrelerindenden username'i myelement'e atar.
         username atanmış olan myElement ve loginsteps'den gelen value parametresini sendkeysFunction'a
          parametre olarak gönderir.
-
-
     }

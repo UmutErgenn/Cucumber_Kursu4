@@ -33,7 +33,7 @@ public class _04_FielsdsSteps extends DialogContent {
     @Then("Already exist message should be displayed")
     public void alreadyExistMessageShouldBeDisplayed() {
         dc.findAndContainsText("alreadyExist","already");
-        new Actions(_gwd.getDriver()).sendKeys(Keys.ESCAPE).perform();
+//        new Actions(_gwd.getDriver()).sendKeys(Keys.ESCAPE).perform();
     }
 
     @When("User delete the {string}")
