@@ -20,6 +20,9 @@ public class LeftNav extends Parent{    // sayfanın solundaki table gibi olan y
     @FindBy(xpath = "(//span[text()='Fees'])[1]")
     private WebElement fees;
 
+    @FindBy(xpath = "(//span[text()='Citizenships'])[1]")
+    private WebElement citizenship;
+
     @FindBy(xpath = "(//span[text()='Fields'])[1]")
     private WebElement fields;
 
@@ -45,6 +48,7 @@ public class LeftNav extends Parent{    // sayfanın solundaki table gibi olan y
             case "entranceExamsOne" : myElement=entranceExamsOne;break;
             case "setupTwo" : myElement=setupTwo;break;
             case "entranceExamsTwo" : myElement=entranceExamsTwo;break;
+            case "citizenship" : myElement=citizenship;break;
         }
         clickFunction(myElement);
     }

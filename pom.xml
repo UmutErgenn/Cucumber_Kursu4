@@ -12,6 +12,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <argLine>-Duser.language=en</argLine>
     </properties>
 
     <dependencies>
@@ -39,7 +40,7 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-testng</artifactId>
-            <version>7.9.0</version>
+            <version>7.11.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -84,52 +85,84 @@
             <version>1.9.2</version>
         </dependency>
 
+        <!-- JDBC - MySql için eklendi -->
         <dependency>
-            <groupId>net.masterthought</groupId>
-            <artifactId>cucumber-reporting</artifactId>
-            <version>5.7.4</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.18</version>
         </dependency>
+
 
     </dependencies>
 
-<build>
-    <plugins>
 
-        <plugin><!--derlemek için-->
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M1</version>
-            <configuration>
+    <!--  Jenkins in Çalıştırma komutunun , nereyi açlıştıracağını belirlediğimiz plugin -->
+    <!--    https://maven.apache.org/surefire/maven-surefire-plugin/examples/inclusion-exclusion.html-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <configuration>
 
-                <includes>
-                    <include>**/_08_TestRunnerMasterReport.java</include>
-                </includes>
-                <testFailureIgnore>true</testFailureIgnore>
-            </configuration>
-        </plugin>
+                    <includes>
+                        <!-- for  run class or classes  **/:bulunduğu lokasyonu bütün klasörlere göre bulabiliyor   -->
+                        <include>**/_04_TestRunnerSmoke.java</include>
+                    </includes>
 
-        <plugin>
-            <groupId>net.masterthought</groupId>
-            <artifactId>maven-cucumber-reporting</artifactId>
-            <version>2.8.0</version>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-            <executions>
-                <execution>
-                    <id>execution</id>
-                    <phase>test</phase>
-                    <goals>
-                        <goal>generate</goal>
-                    </goals>
-                    <configuration>
-                        <projectName>Project Name</projectName>
-                        <outputDirectory>${project.build.directory}/Report/cucumber-reports</outputDirectory>
-                        <cucumberOutput>${project.build.directory}/cucumber/cucumber.json</cucumberOutput>
-                        <skippedFails>true</skippedFails>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
+    <profiles>
+        <profile>
+            <id>Smoke_yeni</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M1</version>
+                        <configuration>
+
+                            <includes>
+                                <!-- for  run class or classes  **/:bulunduğu lokasyonu bütün klasörlere göre bulabiliyor   -->
+                                <include>**/_04_TestRunnerSmoke.java</include>
+                            </includes>
+
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+
+        <profile>
+            <id>Regression</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.0.0-M1</version>
+                        <configuration>
+
+                            <includes>
+                                <!-- for  run class or classes  **/:bulunduğu lokasyonu bütün klasörlere göre bulabiliyor   -->
+                                <include>**/_05_TestRunnerRegression.java</include>
+                            </includes>
+
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+
+    </profiles>
+
+
 
 </project>
