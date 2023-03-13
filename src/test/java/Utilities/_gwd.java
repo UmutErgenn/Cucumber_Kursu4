@@ -73,5 +73,8 @@ public class _gwd { // genel web driver
     public static void setThreadBrowserName(String browserName) {   // setter metod.encapsulation.
         _gwd.threadBrowserName.set(browserName);
     }
+    public static String getThreadBrowserName() {
+        return _gwd.threadBrowserName.get();
+    }
 
 }

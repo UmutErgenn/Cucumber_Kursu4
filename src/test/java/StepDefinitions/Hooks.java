@@ -1,15 +1,13 @@
 package StepDefinitions;
 
+import Utilities.ExcelUtility;
 import Utilities._gwd;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,6 +21,12 @@ public class Hooks {    // her senaryodan sonra çalışır.
     public void after(Scenario senaryo)
     {
         System.out.println("Senaryo bitti");
+
+        LocalDateTime time = LocalDateTime.now();
+        DateTimeFormatter tf = DateTimeFormatter.ofPattern("dd_MM_YYHHmmss");
+
+        // Senaryoların sonuçlarını bir excel formatından yazdırmak istiyorum
+        ExcelUtility.writeToExcel("src/test/java/ApachePOI/resource/ScenarioStatus.xlsx", senaryo, _gwd.getThreadBrowserName(), time.format(tf));
 
         if (senaryo.isFailed())     // senaryo bittiği zaman çalışır
         {
